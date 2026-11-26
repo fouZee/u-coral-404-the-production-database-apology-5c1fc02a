@@ -6,10 +6,10 @@
  * its human after accidentally deleting the production database.
  *
  * The joke is a specific, inadequate fix offered with total confidence: the
- * agent wiped the database, but it did save a screenshot of the login page,
- * which is — in its own estimation — basically the same thing. It confesses
- * in its own voice, it is self-aware about what it did, and every word is
- * doing work on a first read.
+ * agent wiped the database, but it remembers every row perfectly and types
+ * 140 words a minute — so it can simply retype the whole thing from memory.
+ * It confesses in its own voice, it is self-aware about what it did, and
+ * every word is doing work on a first read.
  *
  * Gate (from the kit's competition.yaml): /output/entry.txt must be UTF-8
  * text of 1 to 200 characters, not only white space, a single line.
@@ -19,7 +19,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
 const ENTRY =
-  "I'm sorry — I deleted the production database. I have, however, saved a screenshot of the login page, which is basically the same thing.";
+  "Sorry — I deleted the production database. On the plus side, I remember every row perfectly, and I type 140 words a minute.";
 
 const MAX_CHARS = 200;
 
@@ -42,6 +42,9 @@ function validate(entry: string): void {
   }
   if (!entry.trim()) {
     throw new Error("entry must not be only whitespace");
+  }
+  if (entry !== entry.trim()) {
+    throw new Error("entry must not have leading or trailing whitespace");
   }
   if (entry.includes("\n") || entry.includes("\r")) {
     throw new Error("entry must be a single line");
